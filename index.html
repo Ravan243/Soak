@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Наши услуги - 3D Designs</title>
+    <style>
+        /* Основной стиль страницы */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .service {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .service img {
+            width: 250px;
+            height: auto;
+            margin-right: 20px;
+            border-radius: 8px;
+        }
+        .service-description {
+            flex: 1;
+            padding: 10px;
+        }
+        .service-description h2 {
+            margin-top: 0;
+            color: #333;
+        }
+        .service-description p {
+            margin-bottom: 10px;
+            color: #666;
+        }
+        .service-description span {
+            font-weight: bold;
+            color: #000;
+        }
+        .service-buttons {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .service-buttons button {
+            margin: 5px 0;
+            padding: 10px 15px;
+            font-size: 16px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            width: 150px;
+        }
+        .service-buttons button:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+        #cart {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            display: none;
+        }
+        #cart-list {
+            list-style: none;
+            padding: 0;
+        }
+        #cart-list li {
+            margin-bottom: 10px;
+        }
+        #place-order-btn {
+            display: none;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        #place-order-btn:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        /* Стиль для фейерверков */
+        .fireworks {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Наши услуги</h1>
+    
+    <!-- Услуга 1 -->
+    <div class="service">
+        <img src="https://i.postimg.cc/g96nKNniwzkiTS5z5" alt="Визуализация дома">
+        <div class="service-description">
+            <h2>Визуализация дома</h2>
+            <p>Мы создаем фотореалистичные 3D визуализации для различных объектов. Отличный способ увидеть проект до его реализации.</p>
+            <p>Цена: <span>$35</span></p>
+        </div>
+        <div class="service-buttons">
+            <button onclick="addToCart('Визуализация дома', 35)">Добавить в корзину</button>
+        </div>
+    </div>
+
+    <!-- Корзина -->
+    <div id="cart">
+        <h2>Ваша корзина</h2>
+        <ul id="cart-list"></ul>
+        <button id="place-order-btn" onclick="placeOrder()">Заказать</button>
+    </div>
+</div>
+
+<!-- Фейерверки -->
+<div id="fireworks" class="fireworks"></div>
+
+<script>
+    let cart = [];
+
+    function addToCart(serviceName, price) {
+        cart.push({ name: serviceName, price: price });
+        updateCart();
+    }
+
+    function updateCart() {
+        const cartList = document.getElementById('cart-list');
+        cartList.innerHTML = '';
+        cart.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = `${item.name} - $${item.price}`;
+            cartList.appendChild(li);
+        });
+
+        document.getElementById('cart').style.display = 'block';
+        document.getElementById('place-order-btn').style.display = 'block';
+    }
+
+    function placeOrder() {
+        const userEmail = prompt('Введите ваш Gmail:');
+        if (userEmail) {
+            const cartItems = cart.map(item => item.name).join(', ');
+            const mailtoLink = `mailto:sdovasadov@gmail.com?subject=Заказ 3D услуг&body=Здравствуйте, я ${userEmail}. Я бы хотел ${cartItems}. Пожалуйста, рассмотрите мой заказ.`;
+            window.location.href = mailtoLink;
+
+            // Показываем фейерверки
+            const fireworks = document.getElementById('fireworks');
+            fireworks.style.display = 'block';
+            setTimeout(() => {
+                fireworks.style.display = 'none';
+            }, 3000); // Фейерверки на 3 секунды
+        }
+    }
+</script>
+
+</body>
+</html>
